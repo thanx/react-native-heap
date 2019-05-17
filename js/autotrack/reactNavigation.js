@@ -36,7 +36,11 @@ export const withReactNavigationAutotrack = track => AppContainer => {
       return (
         <AppContainer
           ref={bailOnError(navigatorRef => {
-            if (this.topLevelNavigator !== navigatorRef) {
+            // Only update the 'topLevelNavigator' if the new nav ref is different and non-null.
+            if (
+              this.topLevelNavigator !== navigatorRef &&
+              navigatorRef !== null
+            ) {
               console.log(
                 'Heap: React Navigation is instrumented for autocapture.'
               );
