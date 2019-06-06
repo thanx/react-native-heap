@@ -42,7 +42,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
     }
 
     _render() {
-      const { forwardedRef, ...rest } = this.props;
+      const { forwardedRef, onNavigationStateChange, ...rest } = this.props;
       return (
         <AppContainer
           ref={bailOnError(navigatorRef => {
@@ -56,6 +56,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
             }
           })}
           onNavigationStateChange={bailOnError((prev, next, action) => {
+            onNavigationStateChange(prev, next, action);
             const prevScreenRoute = getActiveRouteName(prev);
             const nextScreenRoute = getActiveRouteName(next);
             if (prevScreenRoute !== nextScreenRoute) {
